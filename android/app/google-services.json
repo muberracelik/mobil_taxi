@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "214902625709",
+    "firebase_url": "https://school-a4e06-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "school-a4e06",
+    "storage_bucket": "school-a4e06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214902625709:android:2ba988645482655374bd24",
+        "android_client_info": {
+          "package_name": "com.example.mobil_taxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214902625709-tfth1gn9s0bengmr2ca5584ecv3fe2k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1RoUK2m3iKwhx1EQS4L0TKyhNgupyWhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214902625709-tfth1gn9s0bengmr2ca5584ecv3fe2k0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
