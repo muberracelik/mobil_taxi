@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mobil_taxi/travel.dart';
@@ -48,8 +47,7 @@ class _Type1State extends State<Type1> {
                   } else {
                     return Container(
                         child: Center(
-                      child:
-                          CircularProgressIndicator(), // if the process takes longer create loading icon.
+                      child: CircularProgressIndicator(),
                     ));
                   }
                 })));

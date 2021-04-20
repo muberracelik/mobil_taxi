@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mobil_taxi/travel.dart';
@@ -109,11 +108,9 @@ class _Type2State extends State<Type2> {
                           onChanged: (text) {
                             location = text;
                           },
-                          onEditingComplete: (){
-                            go=false;
-                            setState(() {
-
-                            });
+                          onEditingComplete: () {
+                            go = false;
+                            setState(() {});
                           },
                         ),
                       ),
@@ -166,8 +163,7 @@ class _Type2State extends State<Type2> {
                     icon: Icon(Icons.local_taxi),
                     onPressed: () {
                       go = true;
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                   ))
                 ],
@@ -179,25 +175,21 @@ class _Type2State extends State<Type2> {
                 child: FutureBuilder<String>(
                     future:
                         go == true ? dbGetTravels(true) : dbGetTravels(false),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<String> snapshot) {
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
                       if (snapshot.hasData) {
-                        if(snapshot.data==""){
+                        if (snapshot.data == "") {
+                          return Container();
+                        } else {
                           return Container(
-
-                          );
-                        }else{
-                          return Container(
-                            child:Text(snapshot.data,style: TextStyle(
-                              fontSize: 40,
-                              color: Colors.white60
-                            ),)
-                          );
+                              child: Text(
+                            snapshot.data,
+                            style:
+                                TextStyle(fontSize: 40, color: Colors.white60),
+                          ));
                         }
                       } else {
-                        return Container(
-                            // if the process takes longer create loading icon.
-                            );
+                        return Container();
                       }
                     }),
               ),
@@ -209,8 +201,8 @@ class _Type2State extends State<Type2> {
   Future<String> dbGetTravels(bool isGo) async {
     List<Travel> list = [];
     List<Travel> selectedTravels = [];
-    int carCount=0;
-    if (isGo==true) {
+    int carCount = 0;
+    if (isGo == true) {
       print("gooo");
 
       await FirebaseDatabase.instance
@@ -243,21 +235,25 @@ class _Type2State extends State<Type2> {
           ));
         }
       });
-      Travel temp;
       for (int j = 0; j < list.length; j++) {
-        int date= int.parse(list[j].tpep_pickup_datetime.toString().split(" ")[0].split("-")[2]);
-        int startDate= int.parse(date1.split("-")[2]);
-        int endDate= int.parse(date2.split("-")[2]);
-        if(date<=endDate && date >=startDate && location == list[j].PULocationID.toString()){
+        int date = int.parse(list[j]
+            .tpep_pickup_datetime
+            .toString()
+            .split(" ")[0]
+            .split("-")[2]);
+        int startDate = int.parse(date1.split("-")[2]);
+        int endDate = int.parse(date2.split("-")[2]);
+        if (date <= endDate &&
+            date >= startDate &&
+            location == list[j].PULocationID.toString()) {
           selectedTravels.add(list[j]);
           print(list[j].toString());
         }
       }
-      carCount=selectedTravels.length;
+      carCount = selectedTravels.length;
       print(carCount);
       return carCount.toString();
-    }
-    else{
+    } else {
       return carCount.toString();
     }
   }

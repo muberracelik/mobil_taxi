@@ -10,31 +10,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-
 }
-
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Travel Stop',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        "/": (context) => MainPage(),//MainPage(),
+        "/": (context) => MainPage(), //MainPage(),
         "/type1": (context) => Type1(),
-        "/type2":(context) => Type2(),
-        "/type3":(context) => Type3(),
+        "/type2": (context) => Type2(),
+        "/type3": (context) => Type3(),
       },
-
     );
   }
 }
-

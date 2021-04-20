@@ -9,7 +9,7 @@ class Type3 extends StatefulWidget {
   _Type3State createState() => _Type3State();
 }
 
-double originLatitude=	40.730610, originLongitude=-73.935242;
+double originLatitude = 40.730610, originLongitude = -73.935242;
 double destLatitude, destLongitude;
 bool go = false;
 var date1Controller = TextEditingController();
@@ -44,7 +44,7 @@ class _Type3State extends State<Type3> {
         appBar: AppBar(
           backgroundColor: Colors.teal.shade800,
           title: Text(
-            "Type 2",
+            "Type 3",
             textAlign: TextAlign.center,
           ),
         ),
@@ -127,7 +127,8 @@ class _Type3State extends State<Type3> {
                 height: size.height / 3,
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
-                      target: LatLng(originLatitude, originLongitude), zoom: 15),
+                      target: LatLng(originLatitude, originLongitude),
+                      zoom: 15),
                   //myLocationEnabled: true,
                   tiltGesturesEnabled: true,
                   compassEnabled: true,
@@ -157,13 +158,11 @@ class _Type3State extends State<Type3> {
         points: polylineCoordinates);
     polylines[id] = polyline;
     if (this.mounted) {
-      // if you pop on this page, setState still doing something. this if clause prevents this.
       setState(() {});
     }
   }
 
   getPolyline() async {
-    //  gets points on the route
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       apiKey,
       PointLatLng(originLatitude, originLongitude),
@@ -173,7 +172,6 @@ class _Type3State extends State<Type3> {
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(
-            // for 5 point after decimal
             double.parse(point.latitude.toStringAsFixed(5)),
             double.parse(point.longitude.toStringAsFixed(5))));
       });
@@ -247,13 +245,14 @@ class _Type3State extends State<Type3> {
       destLatitude = double.parse(result.value['latitude']);
       destLongitude = double.parse(result.value['longitude']);
     });
-    _addMarker(LatLng(originLatitude, originLongitude),
-        "origin", BitmapDescriptor.defaultMarkerWithHue(16));
+    _addMarker(LatLng(originLatitude, originLongitude), "origin",
+        BitmapDescriptor.defaultMarkerWithHue(16));
     // destination marker
-    _addMarker(LatLng(destLatitude, destLongitude),
-        "destination", BitmapDescriptor.defaultMarkerWithHue(170));
+    _addMarker(LatLng(destLatitude, destLongitude), "destination",
+        BitmapDescriptor.defaultMarkerWithHue(170));
     getPolyline();
   }
+
   _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
     // pin the given location on the map
     MarkerId markerId = MarkerId(id);
