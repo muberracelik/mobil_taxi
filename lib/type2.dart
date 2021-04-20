@@ -63,7 +63,6 @@ class _Type2State extends State<Type2> {
                                 date1 =
                                     "${secilenTarih.year}-${secilenTarih.month}-${secilenTarih.day}";
                                 date1Controller.text = "$date1";
-                                print(date1);
                               });
                             });
                           },
@@ -177,35 +176,24 @@ class _Type2State extends State<Type2> {
             Expanded(
               child: Container(
                 height: size.height * 0.6,
-                child: FutureBuilder<List<String>>(
+                child: FutureBuilder<String>(
                     future:
                         go == true ? dbGetTravels(true) : dbGetTravels(false),
                     builder: (BuildContext context,
-                        AsyncSnapshot<List<String>> snapshot) {
+                        AsyncSnapshot<String> snapshot) {
                       if (snapshot.hasData) {
-                        if(snapshot.data.length!=0){
+                        if(snapshot.data==""){
                           return Container(
-                            color: Colors.blueGrey.shade600,
-                            child: ListView.builder(
-                              itemBuilder: (context, index) => Card(
-                                borderOnForeground: true,
-                                elevation: 20,
-                                child: ListTile(
-                                  title: Text(
-                                    snapshot.data[index],
-                                  ),
-                                  onTap: () {},
-                                ),
-                              ),
-                              itemCount: 5,
-                            ),
+
                           );
                         }else{
                           return Container(
-                            // if the process takes longer create loading icon.
+                            child:Text(snapshot.data,style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.white60
+                            ),)
                           );
                         }
-
                       } else {
                         return Container(
                             // if the process takes longer create loading icon.
@@ -218,10 +206,10 @@ class _Type2State extends State<Type2> {
         )));
   }
 
-  Future<List<String>> dbGetTravels(bool isGo) async {
+  Future<String> dbGetTravels(bool isGo) async {
     List<Travel> list = [];
-    List<String> sortedDays = List();
-    List<String> sortedDays1 = [];
+    List<Travel> selectedTravels = [];
+    int carCount=0;
     if (isGo==true) {
       print("gooo");
 
@@ -257,37 +245,20 @@ class _Type2State extends State<Type2> {
       });
       Travel temp;
       for (int j = 0; j < list.length; j++) {
-        for (int i = j + 1; i < list.length; i++) {
-          if (list[i].passenger_count > list[j].passenger_count) {
-            temp = list[i];
-            list[j] = list[i];
-            list[i] = temp;
-          }
+        int date= int.parse(list[j].tpep_pickup_datetime.toString().split(" ")[0].split("-")[2]);
+        int startDate= int.parse(date1.split("-")[2]);
+        int endDate= int.parse(date2.split("-")[2]);
+        if(date<=endDate && date >=startDate && location == list[j].PULocationID.toString()){
+          selectedTravels.add(list[j]);
+          print(list[j].toString());
         }
       }
-      Map<String, int> wordCounts = new Map<String, int>();
-      for (int j = 0; j < list.length; j++) {
-        if (wordCounts
-            .containsKey(list[j].tpep_pickup_datetime.split(" ")[0])) {
-          wordCounts[list[j].tpep_pickup_datetime.split(" ")[0]] +=
-              list[j].passenger_count;
-        } else {
-          wordCounts[list[j].tpep_pickup_datetime.split(" ")[0]] = 0;
-        }
-      }
-      var sortedKeys = wordCounts.keys.toList(growable: true)
-        ..sort((k2, k1) => wordCounts[k1].compareTo(wordCounts[k2]));
-      LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
-          key: (k) => k, value: (k) => wordCounts[k]);
-      for (int j = 0; j < sortedMap.length; j++) {
-        sortedDays.add(sortedMap.keys.elementAt(j).toString() +
-            " Total number of passengers: " +
-            sortedMap.values.elementAt(j).toString());
-      }
-      return sortedDays;
+      carCount=selectedTravels.length;
+      print(carCount);
+      return carCount.toString();
     }
     else{
-      return sortedDays;
+      return carCount.toString();
     }
   }
 }

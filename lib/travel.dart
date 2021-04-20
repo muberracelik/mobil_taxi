@@ -15,6 +15,12 @@ class Travel {
   double fare_amount;
   double tip_amount;
   double tolls_amount;
+
+  @override
+  String toString() {
+    return 'Travel{tpep_pickup_datetime: $tpep_pickup_datetime, tpep_dropoff_datetime: $tpep_dropoff_datetime, passenger_count: $passenger_count, trip_distance: $trip_distance, PULocationID: $PULocationID, DOLocationID: $DOLocationID}';
+  }
+
   double extra;
   double congestion_surcharge;
   double improvement_surcharge;
