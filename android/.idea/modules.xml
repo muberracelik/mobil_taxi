@@ -8,6 +8,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-476961046/android.firebase_database.iml" filepath="$PROJECT_DIR$/.idea/modules/-476961046/android.firebase_database.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1554022676/android.flutter_plugin_android_lifecycle.iml" filepath="$PROJECT_DIR$/.idea/modules/1554022676/android.flutter_plugin_android_lifecycle.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/189147437/android.google_maps_flutter.iml" filepath="$PROJECT_DIR$/.idea/modules/189147437/android.google_maps_flutter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1540429556/io.flutter.plugins.firebase.core.android.firebase_core.iml" filepath="$PROJECT_DIR$/.idea/modules/-1540429556/io.flutter.plugins.firebase.core.android.firebase_core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/639931943/io.flutter.plugins.firebase.database.android.firebase_database.iml" filepath="$PROJECT_DIR$/.idea/modules/639931943/io.flutter.plugins.firebase.database.android.firebase_database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1799646786/io.flutter.plugins.flutter_plugin_android_lifecycle.android.flutter_plugin_android_lifecycle.iml" filepath="$PROJECT_DIR$/.idea/modules/-1799646786/io.flutter.plugins.flutter_plugin_android_lifecycle.android.flutter_plugin_android_lifecycle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/669924355/io.flutter.plugins.googlemaps.android.google_maps_flutter.iml" filepath="$PROJECT_DIR$/.idea/modules/669924355/io.flutter.plugins.googlemaps.android.google_maps_flutter.iml" />
     </modules>
   </component>
 </project>
