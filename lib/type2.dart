@@ -1,6 +1,6 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mobil_taxi/travel.dart';
+import 'package:mobil_taxi/type1.dart';
 
 String date1 = "Select date 1";
 String date2 = "Select date 2";
@@ -23,7 +23,7 @@ class _Type2State extends State<Type2> {
     DateTime yuzYilOncesi = DateTime(now.year - 1);
     GlobalKey<FormFieldState> textkey1 = new GlobalKey<FormFieldState>();
     GlobalKey<FormFieldState> textkey2 = new GlobalKey<FormFieldState>();
-    GlobalKey<FormFieldState> locationkey = new GlobalKey<FormFieldState>();
+    //GlobalKey<FormFieldState> locationkey = new GlobalKey<FormFieldState>();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.teal.shade800,
@@ -46,6 +46,7 @@ class _Type2State extends State<Type2> {
                       Expanded(
                         flex: 4,
                         child: TextField(
+                          readOnly: true,
                           key: textkey1,
                           controller: date1Controller,
                           onTap: () {
@@ -86,6 +87,11 @@ class _Type2State extends State<Type2> {
                       Expanded(
                         flex: 5,
                         child: TextField(
+                          onSubmitted: (value) {
+                            location = value;
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          keyboardType: TextInputType.number,
                           controller: locationController,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
@@ -117,6 +123,7 @@ class _Type2State extends State<Type2> {
                       Expanded(
                         flex: 4,
                         child: TextField(
+                          readOnly: true,
                           key: textkey2,
                           controller: date2Controller,
                           onTap: () {
@@ -199,42 +206,11 @@ class _Type2State extends State<Type2> {
   }
 
   Future<String> dbGetTravels(bool isGo) async {
-    List<Travel> list = [];
-    List<Travel> selectedTravels = [];
     int carCount = 0;
     if (isGo == true) {
-      print("gooo");
-
-      await FirebaseDatabase.instance
-          .reference()
-          .child('travels')
-          .once()
-          .then((result) {
-        for (int i = 0; i < result.value.length - 1; i++) {
-          list.add(Travel.db(
-            int.parse(result.value[i + 1]['VendorID'].toString()),
-            result.value[i + 1]['tpep_pickup_datetime'].toString(),
-            result.value[i + 1]['tpep_dropoff_datetime'].toString(),
-            int.parse(result.value[i + 1]['passenger_count'].toString()),
-            double.parse(result.value[i + 1]['trip_distance'].toString()),
-            int.parse(result.value[i + 1]['RatecodeID'].toString()),
-            result.value[i + 1]['store_and_fwd_flag'].toString(),
-            int.parse(result.value[i + 1]['PULocationID'].toString()),
-            int.parse(result.value[i + 1]['DOLocationID'].toString()),
-            int.parse(result.value[i + 1]['payment_type'].toString()),
-            double.parse(result.value[i + 1]['mta_tax'].toString()),
-            double.parse(result.value[i + 1]['fare_amount'].toString()),
-            double.parse(result.value[i + 1]['tip_amount'].toString()),
-            double.parse(result.value[i + 1]['tolls_amount'].toString()),
-            double.parse(result.value[i + 1]['extra'].toString()),
-            double.parse(
-                result.value[i + 1]['congestion_surcharge'].toString()),
-            double.parse(
-                result.value[i + 1]['improvement_surcharge'].toString()),
-            double.parse(result.value[i + 1]['total_amount'].toString()),
-          ));
-        }
-      });
+      Type1State.dbGetTravels();
+      List<Travel> list = []..addAll(Type1.dbList);
+      List<Travel> selectedTravels = [];
       for (int j = 0; j < list.length; j++) {
         int date = int.parse(list[j]
             .tpep_pickup_datetime

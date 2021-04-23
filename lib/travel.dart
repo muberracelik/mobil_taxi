@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Travel {
   int VendorID;
   String tpep_pickup_datetime;
@@ -47,22 +45,10 @@ class Travel {
       this.total_amount);
 
   Travel.db(
-      this.VendorID,
       this.tpep_pickup_datetime,
       this.tpep_dropoff_datetime,
       this.passenger_count,
       this.trip_distance,
-      this.RatecodeID,
-      this.store_and_fwd_flag,
       this.PULocationID,
-      this.DOLocationID,
-      this.payment_type,
-      this.mta_tax,
-      this.fare_amount,
-      this.tip_amount,
-      this.tolls_amount,
-      this.extra,
-      this.congestion_surcharge,
-      this.improvement_surcharge,
-      this.total_amount);
+      this.DOLocationID);
 }

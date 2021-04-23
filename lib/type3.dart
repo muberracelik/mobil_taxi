@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobil_taxi/travel.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:mobil_taxi/type1.dart';
 
 class Type3 extends StatefulWidget {
   @override
@@ -62,6 +63,7 @@ class _Type3State extends State<Type3> {
                       Expanded(
                         flex: 6,
                         child: TextField(
+                          readOnly: true,
                           key: textkey,
                           controller: date1Controller,
                           onTap: () {
@@ -111,6 +113,10 @@ class _Type3State extends State<Type3> {
                             iconSize: 50,
                             icon: Icon(Icons.local_taxi),
                             onPressed: () {
+                              markers.clear();
+                              polylines.clear();
+                              polylinePoints = PolylinePoints();
+                              polylineCoordinates = [];
                               print(date);
                               dbGetTravels();
                               go = true;
@@ -128,7 +134,7 @@ class _Type3State extends State<Type3> {
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
                       target: LatLng(originLatitude, originLongitude),
-                      zoom: 15),
+                      zoom: 10),
                   //myLocationEnabled: true,
                   tiltGesturesEnabled: true,
                   compassEnabled: true,
@@ -180,36 +186,9 @@ class _Type3State extends State<Type3> {
   }
 
   dbGetTravels() async {
-    List<Travel> list = [];
+    await Type1State.dbGetTravels();
+    List<Travel> list = []..addAll(Type1.dbList);
 
-    await FirebaseDatabase.instance
-        .reference()
-        .child('travels')
-        .once()
-        .then((result) {
-      for (int i = 0; i < result.value.length - 1; i++) {
-        list.add(Travel.db(
-          int.parse(result.value[i + 1]['VendorID'].toString()),
-          result.value[i + 1]['tpep_pickup_datetime'].toString(),
-          result.value[i + 1]['tpep_dropoff_datetime'].toString(),
-          int.parse(result.value[i + 1]['passenger_count'].toString()),
-          double.parse(result.value[i + 1]['trip_distance'].toString()),
-          int.parse(result.value[i + 1]['RatecodeID'].toString()),
-          result.value[i + 1]['store_and_fwd_flag'].toString(),
-          int.parse(result.value[i + 1]['PULocationID'].toString()),
-          int.parse(result.value[i + 1]['DOLocationID'].toString()),
-          int.parse(result.value[i + 1]['payment_type'].toString()),
-          double.parse(result.value[i + 1]['mta_tax'].toString()),
-          double.parse(result.value[i + 1]['fare_amount'].toString()),
-          double.parse(result.value[i + 1]['tip_amount'].toString()),
-          double.parse(result.value[i + 1]['tolls_amount'].toString()),
-          double.parse(result.value[i + 1]['extra'].toString()),
-          double.parse(result.value[i + 1]['congestion_surcharge'].toString()),
-          double.parse(result.value[i + 1]['improvement_surcharge'].toString()),
-          double.parse(result.value[i + 1]['total_amount'].toString()),
-        ));
-      }
-    });
     Travel maxTravel;
     double maxDisctance = 0;
     for (int j = 0; j < list.length; j++) {
